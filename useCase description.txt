@@ -1,183 +1,188 @@
-sign in
-Предусловие:
-У Пользователя есть гугл аккаунт
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за вход в аккаунт
-Система открывает интерфейс входа в гугл аккаунт
-Пользователь авторизируется
-Сервис гугл подтверждает авторизацию
-Система фиксирует вход в аккаунт
-Послеусловие:
-Текущая сессия пользователя становится авторизированной
+1. sign in
+Precondition:
+The user has a Google account.
+Main Flow:
+1. The user clicks the "Sign in" button.
+2. The system opens the Google sign-in interface.
+3. The user completes the authentication process.
+4. Google confirms the authentication.
+5. The system registers the successful login.
+Postcondition:
+The current user session becomes authenticated.
 
-change users info and permissions
-Предусловие:
-Пользователь авторизирован как Администратор
-Главный поток:
-Администратор нажимает на кнопку, отвечающую за управления Пользователями
-Система отображает интерфейс изменения информации и прав Пользователей
-Администратор изменяет данные о Пользователе и подтверждает изменения
-Система сохраняет изменение и вносит их в "cloud users DB" 
-Послеусловие:
-Информация и права Пользователей изменены и сохранены
+2. change users info and permissions
+Precondition:
+The user is authenticated as an Administrator.
+Main Flow:
+1. The administrator clicks the "Manage Users" button.
+2. The system displays the interface for modifying user data and permissions.
+3. The administrator updates user information and confirms changes.
+4. The system saves the changes and updates the cloud users DB.
+Postcondition:
+User data and permissions are updated and saved.
 
-update components DB
-Предусловие:
-Пользователь авторизирован как Администратор
-Администратор подготовил данные в необходимом формате или подготовил парсер для нового формата
-Главный поток:
-Администратор нажимает на кнопку, отвечающую за обновление базы данных компонентов
-Система отображает интерфейс для ввода данных необходимых для обновления 
-Администратор вводит данные и подтверждает
-Система пытается обновить БД и выводит логи в интерфейс обновления
-Если произошла ошибка, Система отменяет операцию. Администратор может повторить обновление
-Послеусловие:
-В Базу данных компонентов добавлены новые компоненты 
+3. update components DB
+Preconditions:
+- The user is authenticated as an Administrator.
+- The administrator has prepared data in the required format or has created a parser for a new format.
+Main Flow:
+1. The administrator clicks the "Update Components DB" button.
+2. The system displays the input interface for the update operation.
+3. The administrator inputs data and confirms the action.
+4. The system attempts to update the components database and displays logs in the update interface.
+5. If an error occurs, the system rolls back the operation. The administrator may retry.
+Postcondition:
+New components are added to the components database.
 
-search build
-Предусловие:
-Главный поток:
-Пользователь нажимает на строку поиска
-Система отображает меню фильтров и список подходящих сборок
-Послеусловие:
-Пользователь имеет возможность выбрать сборку
+4. search build
+Precondition:
+None.
+Main Flow:
+1. The user clicks on the search bar.
+2. The system displays filter options and a list of matching builds.
+Postcondition:
+The user can select a build.
 
-view build
-Предусловие:
-У Пользователя есть сборка или extend "search build" дал результат
-Главный поток:
-Пользователь выбирает сборку и нажимает на кнопку, отвечающую за просмотр выбранной сборки
-Система отображает интерфейс просмотра сборки
-Если пользователь нажимает на кнопку, отвечающую за переход в режим редактирования то extend "open build editor" (недоступно при расширении из "add new component from build")
-Послеусловие:
-Открыт интерфейс просмотра выбранной сборки
+5. view build
+Precondition:
+The user has at least one build or the "search build" use case has returned a result.
+Main Flow:
+1. The user selects a build and clicks the "View Build" button.
+2. The system displays the build view interface.
+3. If the user clicks "Edit", then extend to "open build editor" (not available when extended from "add new component from build").
+Postcondition:
+The selected build is displayed.
 
-open build editor
-Предусловие:
-У Пользователя есть сборка или inclede "search build" дал результат или открыт просмотр сборки
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за редактирование сборки
-Система отображает интерфейс редактирования сборки
-Послеусловие:
-Открыт редактор сборки
+6. open build editor
+Precondition:
+The user has a build, or the use case includes "search build", or a build is being viewed.
+Main Flow:
+1. The user clicks the "Edit Build" button.
+2. The system displays the build editor interface.
+Postcondition:
+The build editor is open.
 
-create new build
-Предусловие:
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за создание новой сборки и выбирает создание с нуля
-include  "open builder editor"
-Послеусловие:
-Создана новая пустая сборка 
+7. create new build
+Precondition:
+None.
+Main Flow:
+1. The user clicks the "Create New Build" button and selects "From scratch".
+2. Include "open build editor".
+Postcondition:
+A new empty build is created.
 
-create new build from a discription
-Предусловие:
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за создание новой сборки и выбирает создание из описания
-Система отображает форму для ввода общих параметров
-Пользователь вводит необходимую информацию и подтверждает начало операции
-Система предлагает выбор нескольких сборок
-Пользователь выбирает сборку
-include  "open builder editor"
-Система вносит данные о выбранной сборке
-Послеусловие:
-Создана новая сборка по описанию пользователя
+8. create new build from a description
+Precondition:
+None.
+Main Flow:
+1. The user clicks the "Create New Build" button and selects "From description".
+2. The system displays a form for general parameters.
+3. The user fills out the form and confirms the operation.
+4. The system presents a list of suggested builds.
+5. The user selects one.
+6. Include "open build editor".
+7. The system inserts data from the selected build.
+Postcondition:
+A new build is created based on user-provided description.
 
-create new build from a template
-Предусловие:
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за создание новой сборки и выбирает создание по шаблону
-Система предлагает выбор из заготовленных сборок
-Пользователь выбирает сборку
-include  "open builder editor"
-Система вносит данные о выбранной сборке
-Послеусловие:
-Создана новая сборка по шаблону
+9. create new build from a template
+Precondition:
+None.
+Main Flow:
+1. The user clicks the "Create New Build" button and selects "From template".
+2. The system displays a list of predefined templates.
+3. The user selects one.
+4. Include "open build editor".
+5. The system populates the build with template data.
+Postcondition:
+A new build is created from a template.
 
-save build
-Предусловие:
-Пользователь авторизирован
-Открыт редактор сборки или просмотр сборки
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за сохранение текущей сборки
-Система сохраняет сборку в "cloud users DB" 
-Послеусловие:
-Текущая сборка сохранена
+10. save build
+Preconditions:
+- The user is authenticated.
+- A build is being edited or viewed.
+Main Flow:
+1. The user clicks the "Save Build" button.
+2. The system saves the build to the cloud users DB.
+Postcondition:
+The current build is saved.
 
-delete build
-Предусловие:
-Пользователь авторизирован
-Открыт редактор сборки или просмотр сборки
-Текущая сборка сохранена
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за удаление текущей сборки
-Система удаляет сборку из "cloud users DB" 
-Послеусловие:
-Текущая сборка удалена
+11. delete build
+Preconditions:
+- The user is authenticated.
+- A build is being edited or viewed.
+- The build has already been saved.
+Main Flow:
+1. The user clicks the "Delete Build" button.
+2. The system deletes the build from the cloud users DB.
+Postcondition:
+The current build is deleted.
 
-print or export build
-Предусловие: 
-Открыт редактор сборки
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за экспорт
-Система выводит меню настройки экспорта
-Пользователь настраивает экспорт и подтверждает операцию
-Система генерирует файл и выводит элемент для скачивания  
-Послеусловие: 
-Пользователь загрузил файл в выбранном формате
+12. print or export build
+Precondition:
+The build editor is open.
+Main Flow:
+1. The user clicks the "Export" button.
+2. The system shows export configuration options.
+3. The user adjusts settings and confirms.
+4. The system generates a file and displays a download link or button.
+Postcondition:
+The user has downloaded the build in the selected format.
 
-add new component from list
-Предусловие:
-Открыт редактор сборки. Выбран тип элемента в интерфейсе редактора
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за добавление нового элемента сборки
-Система выводит список фильтров а так же список предлагаемых компонентов
-Пользователь настраивает фильтры и выбирает необходимый компонент
-Система добавляет компонент в текущую сборку и отображает в интерфейсе 
-Послеусловие:
-Новый компонент из списка был добавлен в сборку 
+13. add new component from list
+Precondition:
+The build editor is open. The user has selected a component type.
+Main Flow:
+1. The user clicks the "Add Component" button.
+2. The system displays filter options and a list of components.
+3. The user configures filters and selects a component.
+4. The system adds the component to the build and updates the interface.
+Postcondition:
+A new component from the list has been added to the build.
 
-add new component from build
-Предусловие:
-Открыт редактор сборки
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за добавление компонента из сборки
-Система отображает список сборок пользователя и сроку поиска
-include "search"
-Пользователь выбирает сборку
-include "view build"
-Пользователь выбирает один или несколько компонентов из списка компонентов открытой сборки
-Система добавляет компонент(ы) в текущую сборку
-Послеусловие:
-Добавлен новый компонент из сборки
+14. add new component from build
+Precondition:
+The build editor is open.
+Main Flow:
+1. The user clicks the "Add from Build" button.
+2. The system shows a list of user builds and a search bar.
+3. Include "search build".
+4. The user selects a build.
+5. Include "view build".
+6. The user selects one or more components from that build.
+7. The system adds the selected components to the current build.
+Postcondition:
+New components from another build have been added.
 
-go to component site
-Предусловие:
-Пользователь авторизирован и у него есть отслеживаемые компоненты
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за открытие списка отслеживаемых компонентов
-Система отображает список отслеживаемых компонентов пользователя и информацию о них
-Пользователь выбирает компонент и нажимает на кнопку, отвечающую за переход на сайт компонента
-Система открывает в новой вкладке ссылку, привязанную к данному компоненту  
-Послеусловие:
-В новой вкладке открыт сайт компонента  
+15. go to component site
+Precondition:
+The user is authenticated and has tracked components.
+Main Flow:
+1. The user clicks the "Tracked Components" button.
+2. The system displays a list of tracked components with relevant data.
+3. The user selects a component and clicks the button to visit its external site.
+4. The system opens the corresponding URL in a new tab.
+Postcondition:
+The component’s website is opened in a new browser tab.
 
-delete component
-Предусловие:
-Открыт редактор сборки
-В текущей сборки есть компонент
-Главный поток:
-Пользователь выбирает компонент и нажимает на кнопку, отвечающую за удаление компонента
-Пользователь подтверждает удаление
-Система удаляет компонент из текущей сборки
-Послеусловие:
-Из текущей сборки удален компонент
+16. delete component
+Preconditions:
+- The build editor is open.
+- The build contains at least one component.
+Main Flow:
+1. The user selects a component and clicks the "Delete Component" button.
+2. The user confirms the deletion.
+3. The system removes the component from the build.
+Postcondition:
+The component is removed from the current build.
 
-customization
-Предусловие:
-Главный поток:
-Пользователь нажимает на кнопку, отвечающую за настройки интерфейса
-Система отображает интерфейс для настройки
-Пользователь вводит данные и меняет настройки
-Система сохраняет настройки в "cloud users DB" 
-Послеусловие:
-Настройки пользователя изменены
+17. customization
+Precondition:
+None.
+Main Flow:
+1. The user clicks the "Settings" button.
+2. The system displays the customization interface.
+3. The user changes settings and inputs preferences.
+4. The system saves the changes to the cloud users DB.
+Postcondition:
+The user's interface settings are updated.
